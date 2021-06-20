@@ -146,6 +146,10 @@ func (gw *Gateway) ServeDNS(ctx context.Context, w dns.ResponseWriter, r *dns.Ms
 	m.SetReply(state.Req)
 
 	if len(addrs) == 0 {
+		if gw.Fall.Through(qname) {
+			return plugin.NextOrFailure(gw.Name(), gw.Next, ctx, w, r)
+		}
+
 		m.Rcode = dns.RcodeNameError
 		m.Ns = []dns.RR{gw.soa(state)}
 		if err := w.WriteMsg(m); err != nil {
