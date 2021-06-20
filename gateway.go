@@ -146,7 +146,9 @@ func (gw *Gateway) ServeDNS(ctx context.Context, w dns.ResponseWriter, r *dns.Ms
 	m.SetReply(state.Req)
 
 	if len(addrs) == 0 {
+		log.Debug("No addresses found.")
 		if gw.Fall.Through(qname) {
+			log.Debug("Fall through enabled, goodbye.")
 			return plugin.NextOrFailure(gw.Name(), gw.Next, ctx, w, r)
 		}
 
@@ -170,7 +172,9 @@ func (gw *Gateway) ServeDNS(ctx context.Context, w dns.ResponseWriter, r *dns.Ms
 
 	// If there's no match, fall through or return the SOA
 	if len(m.Answer) == 0 {
+		log.Debug("Invalid type.")
 		if gw.Fall.Through(qname) {
+			log.Debug("Not a valid record type for me and fall through enabled, goodbye.")
 			return plugin.NextOrFailure(gw.Name(), gw.Next, ctx, w, r)
 		}
 
