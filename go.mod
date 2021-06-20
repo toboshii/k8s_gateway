@@ -1,4 +1,4 @@
-module github.com/ori-edge/k8s_gateway
+module github.com/toboshii/k8s_gateway
 
 go 1.14
 
