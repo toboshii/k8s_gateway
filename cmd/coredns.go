@@ -2,7 +2,7 @@ package main
 
 import (
 	_ "github.com/coredns/coredns/core/plugin"
-	_ "github.com/ori-edge/k8s_gateway"
+	_ "github.com/toboshii/k8s_gateway"
 
 	"github.com/coredns/coredns/core/dnsserver"
 	"github.com/coredns/coredns/coremain"
